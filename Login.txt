@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <title>Movie Guru - Log In</title>
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Other stylesheets and scripts if needed -->
+</head>
+<body>
+    <div class="container">
+        <main>
+            <h2 class="mt-5">Log In to Movie Guru</h2>
+
+            <?php
+            // Check if the login form is submitted
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                // Include database connection code here
+
+                // Assuming you have a database connection, replace the following with your actual connection code
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "movieguru";
+
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                $username = $_POST["username"];
+                $password = $_POST["password"];
+
+                $sql = "SELECT * FROM users WHERE username = '$username'";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    if (password_verify($password, $row["password"])) {
+                        echo '<div class="alert alert-success" role="alert">Login successful!</div>';
+                    } else {
+                        echo '<div class="alert alert-danger" role="alert">Incorrect password. Please try again.</div>';
+                    }
+                } else {
+                    echo '<div class="alert alert-danger" role="alert">User not found. Please check your username.</div>';
+                }
+
+                $conn->close();
+            }
+            ?>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+        </main>
+    </div>
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
