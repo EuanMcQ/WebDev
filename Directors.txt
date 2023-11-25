@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-bar {
+            background-color: #808080; /* Grey color */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #films {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center the films */
+            padding: 20px;
+            margin-top: -40px; /* Increased negative margin to move the films up more */
+        }
+
+        .film {
+            position: relative;
+            width: 250px; /* Adjusted width */
+            margin: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .film img {
+            width: 100%;
+            max-height: 100%;
+        }
+
+        .arrow-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3498db; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1; /* Ensure the arrow button is above other elements */
+        }
+
+        #bottom-bar {
+            background-color: #808080; /* Grey color */
+            padding: 5px; /* Reduced padding to make the bar smaller */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px; /* Reduced font size */
+        }
+    </style>
+    <title>Movie Guru</title>
+</head>
+
+<body>
+
+    <div id="top-bar">
+        <h1>Movie Guru</h1>
+        <input type="text" placeholder="Search" style="float: right; margin-right: 10px;">
+    </div>
+
+    <div id="header">
+        <img src="https://img.freepik.com/premium-vector/vintage-movie-film-camera-retro_507816-143.jpg?w=150" alt="Film Camera Image">
+        <p></p>
+    </div>
+
+    <div id="films">
+        <!-- Film 1 -->
+        <div class="film">
+            <img src="https://consequenceofsound.net/wp-content/uploads/2015/12/christopher-nolan-new-film-france-ww2-war-dunkirk.png?w=807" alt="Film 1">
+            <h3>Christopher Nolan</h3>
+            <p>His most recognized films are: The Dark Knight Triology/ Inception/ Interstellar/ Oppenheimer/ Memento/ Dunkirk/ Tenet/ Insomnia/ Following</p>
+        </div>
+
+        <!-- Film 2 -->
+        <div class="film">
+            <img src="https://th.bing.com/th/id/OIP.Bewf6qgzafr6awR7MoRC0QHaE3?rs=1&pid=ImgDetMain" alt="Film 2">
+            <h3>Quentin Tarantino</h3>
+            <p>His most recognized films are: Once Upon a Time... in Hollywood/ Inglourious Basterds/ The Hateful Eight/ Reservoir Dogs/ Django Unchained/ Pulp Fiction/ Kill Bill Volume 1 and 2/ Jackie Brown</p>
+        </div>
+
+        <!-- Film 3 -->
+        <div class="film">
+            <img src="https://th.bing.com/th/id/R.431044d33e6a26a25631db2839f4a4e7?rik=63U1y48azgYsOA&riu=http%3a%2f%2fwww.bfi.org.uk%2fsites%2fbfi.org.uk%2ffiles%2fnews%2fkubrick-stanley-001-dmitri-kastarine-portrait-hands-in-hair-with-arriflex_1000x750.jpg&ehk=A4uhsmQTapK1iI%2bc3uHJ4qkEsNUYOob8rBjo2ko5IUU%3d&risl=&pid=ImgRaw&r=0" alt="Film 3">
+            <h3>Stanley Kubrick</h3>
+            <p>His most recognized films are: Fear and Desire/ Killer's Kiss/ The Killing/ Paths of Glory/ Spartacus/ Lolita/ 2001: A Space Odyssey/ Full Metal Jacket/ Barry Lyndon/ The Shining</p>
+        </div>
+
+        <!-- Film 4 -->
+        <div class="film">
+            <img src="https://th.bing.com/th/id/OIP.C055uDoyGONDuOokDvGqEQHaJf?rs=1&pid=ImgDetMain" alt="Film 4">
+            <h3>Alred Hitchcock</h3>
+            <p>His most recognized films are: Shadow of a Doubt/ Rear Window/ Rebecca/ Psycho/ Strangers on a Train/ The lady vanishes/ The 39 steps/ Notorious/ The birds/ Rope/ Family Plot</p>
+        </div>
+
+        <!-- Film 5 -->
+        <div class="film">
+            <img src="https://thefilmstage.com/wp-content/uploads/2013/09/Hayao-Miyazaki.jpg" alt="Film 5">
+            <h3>Hayao Miyazaki</h3>
+            <p>His most recognized films are: Kiki's Delivery Service/ Spirited Away/ My Neighbor Totoro/ Princess Mononoke/ Ponya/ The wind rises/ Howl's Moving castle/ Castle in the Sky/ The castle of Cagliostro</p>
+        </div>
+
+        <!-- Film 6 -->
+        <div class="film">
+            <img src="https://th.bing.com/th/id/OIP.mqdy7bI65tmBgrANaJlXwgHaLI?rs=1&pid=ImgDetMain" alt="Film 6">
+            <h3>Wes Anderson</h3>
+            <p>His most recognized films are: Moonrise Kingdom/ Fantastic Mr.Fox/ The Grand Budapest Hotel/ Isle of Dogs/ Rushmore/ Bottle Rocket/ The Royal Tenenbaums/ The French Dispact/ The Darjeeling Limited</p>
+        </div>
+    </div>
+
+    <div id="bottom-bar">
+        <p>Designed by Movie Guru</p>
+    </div>
+
+    <script>
+        function addToLibrary(filmId) {
+            // Add logic here to handle adding the film to the user's personal library
+            alert("Added to library: Film " + filmId);
+        }
+
+        function goToAnotherPage() {
+            // Add logic here to navigate to another page with the same layout
+            alert("Navigating to another page...");
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-bar {
+            background-color: #808080; /* Grey color */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #films {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            margin-top: -40px; /* Increased negative margin to move the films up more */
+        }
+
+        .film {
+            position: relative;
+            width: 300px;
+            margin: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .film img {
+            width: 100%;
+            max-height: 100%;
+        }
+
+        .plus-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3498db; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .arrow-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3498db; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1; /* Ensure the arrow button is above other elements */
+        }
+
+        #bottom-bar {
+            background-color: #808080; /* Grey color */
+            padding: 5px; /* Reduced padding to make the bar smaller */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px; /* Reduced font size */
+        }
+    </style>
+    <title>Movie Guru</title>
+</head>
+<body>
+
+    <div id="top-bar">
+        <h1>Movie Guru</h1>
+    </div>
+
+    <div id="header">
+        <h2>Oscar Winners</h2>
+        <p></p>
+    </div>
+
+    <div id="films">
+        <!-- Film 1 -->
+        <div class="film">
+            <img src="https://m.media-amazon.com/images/M/MV5BYTdiOTIyZTQtNmQ1OS00NjZlLWIyMTgtYzk5Y2M3ZDVmMDk1XkEyXkFqcGdeQXVyMTAzMDg4NzU0._V1_FMjpg_UX1000_.jpg" alt="Film 1">
+            <h3>Everything Everywhere All At Once</h3>
+            <p>A middle-aged Chinese immigrant is swept up into an insane adventure in which she alone can save existence by exploring other universes and connecting with the lives she could have led. <button class="plus-button" onclick="addToLibrary(1)">+</button></p>
+        </div>
+
+        <!-- Film 2 -->
+        <div class="film">
+            <img src="https://www.showbizjunkies.com/wp-content/uploads/2021/06/coda-poster-400x600.jpg" alt="Film 2">
+            <h3>CODA</h3>
+            <p>In Gloucester, on the northeast coast of Massachusetts, seventeen-year-old Ruby Rossi is the only hearing member of her family; her parents, Frank and Jackie, and older brother, Leo, are all deaf. She assists with the family fishing business and plans to join it full-time after high school.<button class="plus-button" onclick="addToLibrary(2)">+</button></p>
+        </div>
+
+        <!-- Film 3 -->
+        <div class="film">
+            <img src="https://image.tmdb.org/t/p/original/8Vc5EOUEIF1EUXuX9eLFf7BvN3P.jpg" alt="Film 3">
+            <h3>Nomadland</h3>
+            <p>A woman in her sixties, after losing everything in the Great Recession, embarks on a journey through the American West, living as a van-dwelling modern-day nomad.<button class="plus-button" onclick="addToLibrary(3)">+</button></p>
+            <!-- Arrow button to navigate to another page -->
+            <button class="arrow-button" onclick="goToAnotherPage()">➡</button>
+        </div>
+    </div>
+
+    <div id="bottom-bar">
+        <p>Designed by Movie Guru</p>
+    </div>
+
+    <script>
+        function addToLibrary(filmId) {
+            // Add logic here to handle adding the film to the user's personal library
+            alert("Added to library: Film " + filmId);
+        }
+
+        function goToAnotherPage() {
+            // Add logic here to navigate to another page with the same layout
+            alert("Navigating to another page...");
+        }
+    </script>
+
+</body>
+</html>

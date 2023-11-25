@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <head><script src="../assets/js/color-modes.js"></script>
-
+<head>
+    <script src="assets/js/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -11,11 +11,10 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
 
-    
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -178,7 +177,7 @@
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <!-- Add a login button to the top right -->
-            <button class="btn btn-outline-light ms-2">Login</button>
+            <a class="btn btn-outline-light ms-2" href="file:///C:/Users/euanm/Desktop/WebDev%20Assignment/Movies/Login.html">Login</a>
           </div>
         </div>
       </nav>
@@ -199,7 +198,7 @@
           <div class="carousel-caption text-start">
             <h1></h1>
             <p class="opacity-75"></p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+            <p><a class="btn btn-lg btn-primary" href="file:///C:/Users/euanm/Desktop/WebDev%20Assignment/Movies/SignIn.html">Sign up today</a></p>
           </div>
         </div>
       </div>
@@ -246,19 +245,19 @@
         <img src="https://th.bing.com/th/id/OIP.vO1tsnlo_JQZ3-Iq2b5luQHaHa?rs=1&pid=ImgDetMain" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <h2 class="fw-normal">Oscar Winners</h2>
         <p>Movies, who have won the oscar for film of the year.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <p><a class="btn btn-lg btn-primary" href="C:\Users\euanm\Desktop\WebDev Assignment\Movies\oscars.html">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <img src="https://www.pngitem.com/pimgs/m/138-1381056_rotten-tomatoes-fresh-logo-hd-png-download.png" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <h2 class="fw-normal">Rotten Tomatoes</h2>
         <p>The highest rated films on Rotten Tomatoes</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <p><a class="btn btn-lg btn-primary" href="C:\Users\euanm\Desktop\WebDev Assignment\Movies\RottenT.html">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
         <img src="https://img.freepik.com/premium-vector/vintage-movie-film-camera-retro_507816-143.jpg?w=826" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
         <h2 class="fw-normal">Decorated Directors</h2>
         <p></p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <p><a class="btn btn-lg btn-primary" href="C:\Users\euanm\Desktop\WebDev Assignment\Movies\Directors.html">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
