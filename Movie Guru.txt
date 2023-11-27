@@ -296,8 +296,8 @@
     <div class="row featurette">
       <div class="col-md-7">
         <h2 class="featurette-heading fw-normal lh-1">The Box Office <span class="text-body-secondary"></span></h2>
-        <p class="lead">Discover the films which are considered box office hits and flops</p>
-        <button type="button" class="btn btn-primary">Learn More</button>
+        <p class="lead">Discover the films which are considered box office flops</p>
+        <a href="C:\Users\euanm\Desktop\WebDev Assignment\Movies\BoxOffice.html" class="btn btn-primary">Learn More</a>
       </div>
       <div class="col-md-5">
         <img src="https://thumbs.dreamstime.com/b/bookshelf-colorful-books-vector-close-up-illustration-bookshelf-background-shelves-full-colorful-books-home-library-books-99342859.jpg" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em"></text></svg>
