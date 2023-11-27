@@ -1,0 +1,114 @@
+const http = require('http');
+const url = require('url');
+const path = require('path');
+const fs = require('fs');
+const mysql = require('mysql');
+
+// Create a MySQL connection
+const dbConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'WebDev',
+    database: 'mydb'
+});
+
+dbConnection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL: ', err);
+        return;
+    }
+    console.log('Connected to MySQL');
+});
+
+http.createServer(function (req, res) {
+    const q = url.parse(req.url, true);
+    let file;
+
+    // Set the base directory for serving files
+    const baseDirectory = 'C:\\Users\\euanm\\Desktop\\WebDev Assignment\\Movies';
+
+    if (q.pathname === '' || q.pathname === '/') {
+        file = path.join(baseDirectory, 'index.html');
+    } else if (q.pathname === '/signup' && req.method === 'GET') {
+        // Serve the sign-up page
+        file = path.join(baseDirectory, 'signup.html');
+    } else if (q.pathname === '/signup' && req.method === 'POST') {
+        // Handle sign-up form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const username = formData.get('username');
+            const password = formData.get('password');
+
+            // Insert the user into the database (this is a simple example and not secure)
+            const insertQuery = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+
+            dbConnection.query(insertQuery, (err, result) => {
+                if (err) {
+                    console.error('Error inserting user into the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                return res.end('Sign-up successful!'); // You may want to redirect to a login page
+            });
+        });
+
+        return;
+    } else {
+        file = path.join(baseDirectory, q.pathname);
+    }
+
+    fs.readFile(file, function (err, data) {
+        if (err) {
+            // Check if the requested path is a directory and serve a default "index.html" if available
+            if (err.code === 'EISDIR') {
+                file = path.join(file, 'index.html');
+                return fs.readFile(file, function (err, data) {
+                    if (err) {
+                        res.writeHead(404, { 'Content-Type': 'text/html' });
+                        return res.end('404 Not Found');
+                    }
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write(data);
+                    return res.end();
+                });
+            }
+
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            return res.end('404 Not Found');
+        }
+
+        // Determine the file extension
+        let contentType;
+        const fileExtension = path.extname(file).slice(1);
+
+        switch (fileExtension) {
+            case 'html':
+                contentType = 'text/html';
+                break;
+            case 'css':
+                contentType = 'text/css';
+                break;
+            case 'js':
+                contentType = 'application/javascript';
+                break;
+            // Add more cases for other file types if needed
+
+            default:
+                contentType = 'application/octet-stream';
+        }
+
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.write(data);
+        return res.end();
+    });
+}).listen(8080);
+
+console.log('Server running at http://localhost:8080/');
