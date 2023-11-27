@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-bar {
+            background-image: url('https://www.boredpanda.com/blog/wp-content/uploads/2023/07/oppenheimer-premiere-stars-walked-out-sag-strike-7-64b0eb9f43ac6__700.jpg');
+            background-size: cover;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            height: 100px; /* Adjust the height based on your image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #header img {
+            height: 150px; /* Adjust the height of the image based on your preference */
+        }
+
+        #films {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            margin-top: -40px; /* Increased negative margin to move the films up more */
+        }
+
+        .film {
+            position: relative;
+            width: 300px;
+            margin: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .film img {
+            width: 100%;
+            max-height: 100%;
+        }
+
+        .plus-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3498db; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .arrow-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3498db; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1; /* Ensure the arrow button is above other elements */
+        }
+
+        #bottom-bar {
+            background-image: url('https://www.boredpanda.com/blog/wp-content/uploads/2023/07/oppenheimer-premiere-stars-walked-out-sag-strike-7-64b0eb9f43ac6__700.jpg');
+            background-size: cover;
+            padding: 5px; /* Reduced padding to make the bar smaller */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px; /* Reduced font size */
+            height: 30px; /* Adjust the height based on your image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <title>Movie Guru</title>
+</head>
+<body>
+
+    <div id="top-bar">
+        <!-- No need for <h1> element here as the background image contains the text -->
+    </div>
+
+    <div id="header">
+        <img src="https://clipartmag.com/images/lighthouse-drawing-22.jpg" alt="Lighthouse Image"/>
+        <p></p>
+    </div>
+
+    <div id="films">
+        <!-- Film 1 -->
+        <div class="film">
+            <img src="https://cdn.kinocheck.com/i/77h3gf60s5.jpg" alt="Film 1">
+            <h3>Kingdom of the Planet of the Apes.</h3>
+            <p>Many years after the reign of Caesar, a young ape goes on a journey that will lead him to question everything he's been taught about the past and make choices that will define a future for apes and humans alike. Release date: 22 May 2024<button class="plus-button" onclick="addToLibrary(1)">+</button></p>
+        </div>
+
+        <!-- Film 2 -->
+        <div class="film">
+            <img src="https://posterspy.com/wp-content/uploads/2018/02/Poster-2017-Dune.jpg" alt="Film 2">
+            <h3>Dune Part: 2</h3>
+            <p>The plot follows Paul Atreides as he unites with the Fremen people of the desert planet Arrakis1and faces a choice between the love of his life and the fate of the known universe. He also seeks revenge against the conspirators who destroyed his family and tries to prevent a terrible future only he can foresee. Release date: 1 Mar 2024<button class="plus-button" onclick="addToLibrary(2)">+</button></p>
+        </div>
+
+        <!-- Film 3 -->
+        <div class="film">
+            <img src="https://posterspy.com/wp-content/uploads/2022/08/jokerweb.jpg" alt="Film 3">
+            <h3>Joker: Folie à Deux</h3>
+            <p>Plot is unknown. Release date: 2 Oct 2024<button class="plus-button" onclick="addToLibrary(3)">+</button></p>
+            <!-- Arrow button to navigate to another page -->
+            <button class="arrow-button" onclick="goToAnotherPage()">➡</button>
+        </div>
+    </div>
+
+    <div id="bottom-bar">
+        <!-- No need for <p> element here as the background image contains the text -->
+    </div>
+
+    <script>
+        function addToLibrary(filmId) {
+            // Add logic here to handle adding the film to the user's personal library
+            alert("Added to library: Film " + filmId);
+        }
+
+        function goToAnotherPage() {
+            // Add logic here to navigate to another page with the same layout
+            alert("Navigating to another page...");
+        }
+    </script>
+
+</body>
+</html>
