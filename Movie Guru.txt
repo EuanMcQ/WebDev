@@ -271,7 +271,7 @@
         <h2 class="featurette-heading fw-normal lh-1">Upcoming Movies <span class="text-body-secondary"></span></h2>
         <p class="lead">Discover and find out about new exciting and up and coming movies.</p>
         <p class="lead">See the actors and their roles and story they produce.</p>
-        <button type="button" class="btn btn-primary">Learn More</button>
+        <a href="C:\Users\euanm\Desktop\WebDev Assignment\Movies\Upcoming.html" class="btn btn-primary">Learn More</a>
       </div>
       <div class="col-md-5">
         <img src="https://media.istockphoto.com/vectors/dark-room-light-coming-in-through-an-open-door-vector-id1218833196?k=6&m=1218833196&s=612x612&w=0&h=pB5GFYhkhOMLWkrKARiSRTFO22WzD3o_ZD1VVUakBnU=" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em"></text></svg>
