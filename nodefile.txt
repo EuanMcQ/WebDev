@@ -1,0 +1,176 @@
+const http = require('http');
+const url = require('url');
+const path = require('path');
+const fs = require('fs');
+const mysql = require('mysql');
+const axios = require('axios');
+
+
+const dbConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'ROOT',
+    database: 'mydb'
+});
+
+dbConnection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL: ', err);
+        return;
+    }
+    console.log('Connected to MySQL');
+});
+
+
+http.createServer(function (req, res) {
+    const q = url.parse(req.url, true);
+    let file;
+    const baseDirectory = 'C:\\Users\\mpjtr\\WebDev\\Movie Guru';
+
+    if (q.pathname === '' || q.pathname === '/') {
+        file = path.join(baseDirectory, 'index.html');
+    } else if (q.pathname === '/signup' && req.method === 'GET') {
+        file = path.join(baseDirectory, 'signup.html');
+    } else if (q.pathname === '/signup' && req.method === 'POST') {
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            const email = formData.get('email');
+
+            const insertQuery = `INSERT INTO user (username, password) VALUES ('${username}', '${password}', '${email}')`;
+
+            dbConnection.query(insertQuery, (err, result) => {
+                if (err) {
+                    console.error('Error inserting user into the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                return res.end('Sign-up successful!'); 
+            });
+        });
+
+        return;
+    } else if (q.pathname === '/account' && req.method === 'GET') {
+        // Serve the account page
+        file = path.join(baseDirectory, 'account.html');
+    } else if (q.pathname === '/update' && req.method === 'GET') {
+        // Serve the account update page
+        file = path.join(baseDirectory, 'update.html');
+    } else if (q.pathname === '/update' && req.method === 'POST') {
+        // Handle account update form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            const userId = formData.get('userId'); // Add a hidden input for the user ID in update.html
+
+            // Update the user in the database (this is a simple example and not secure)
+            const updateQuery = `UPDATE user SET username = '${username}', password = '${password}' WHERE id = ${userId}`;
+
+            dbConnection.query(updateQuery, (err, result) => {
+                if (err) {
+                    console.error('Error updating user in the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                return res.end('Account updated successfully!');
+            });
+        });
+
+        return;
+    } else if (q.pathname === '/delete' && req.method === 'GET') {
+        // Serve the account deletion confirmation page
+        file = path.join(baseDirectory, 'delete.html');
+    } else if (q.pathname === '/delete' && req.method === 'POST') {
+        // Handle account deletion form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const userId = formData.get('userId'); // Add a hidden input for the user ID in delete.html
+
+            // Delete the user from the database (this is a simple example and not secure)
+            const deleteQuery = `DELETE FROM user WHERE id = ${userId}`;
+
+            dbConnection.query(deleteQuery, (err, result) => {
+                if (err) {
+                    console.error('Error deleting user from the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                return res.end('Account deleted successfully!');
+            });
+        });
+
+        return;
+    } else {
+        file = path.join(baseDirectory, q.pathname);
+    }
+
+    fs.readFile(file, function (err, data) {
+        if (err) {
+            if (err.code === 'EISDIR') {
+                file = path.join(file, 'index.html');
+                return fs.readFile(file, function (err, data) {
+                    if (err) {
+                        res.writeHead(404, { 'Content-Type': 'text/html' });
+                        return res.end('404 Not Found');
+                    }
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write(data);
+                    return res.end();
+                });
+            }
+
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            return res.end('404 Not Found');
+        }
+
+        let contentType;
+        const fileExtension = path.extname(file).slice(1);
+
+        switch (fileExtension) {
+            case 'html':
+                contentType = 'text/html';
+                break;
+            case 'css':
+                contentType = 'text/css';
+                break;
+            case 'js':
+                contentType = 'application/javascript';
+                break;
+
+            default:
+                contentType = 'application/octet-stream';
+        }
+
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.write(data);
+        return res.end();
+    });
+}).listen(8080);
+
+console.log('Server running at http://localhost:8080/');
