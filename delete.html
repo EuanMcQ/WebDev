@@ -1,0 +1,26 @@
+<!-- delete.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <title>Movie Guru - Delete Account</title>
+    <link href="bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <h2 class="mt-5">Delete Your Account</h2>
+            <p>Are you sure you want to delete your account?</p>
+            <form action="/delete" method="post">
+                <!-- Add a hidden input for the user ID -->
+                <input type="hidden" name="userId" value="[user_id]">
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+        </main>
+    </div>
+    <script src="bootstrap.bundle.min.js"></script>
+</body>
+</html>
