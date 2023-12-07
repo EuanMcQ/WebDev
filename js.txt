@@ -2,13 +2,12 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
-// Create a MySQL connection
 const dbConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'WebDev',
+    password: 'ROOT',
     database: 'mydb'
 });
 
@@ -23,17 +22,13 @@ dbConnection.connect((err) => {
 http.createServer(function (req, res) {
     const q = url.parse(req.url, true);
     let file;
-
-    // Set the base directory for serving files
     const baseDirectory = 'C:\\Users\\euanm\\Desktop\\WebDev Assignment\\Movies';
 
     if (q.pathname === '' || q.pathname === '/') {
         file = path.join(baseDirectory, 'index.html');
     } else if (q.pathname === '/signup' && req.method === 'GET') {
-        // Serve the sign-up page
         file = path.join(baseDirectory, 'signup.html');
     } else if (q.pathname === '/signup' && req.method === 'POST') {
-        // Handle sign-up form submission
         let data = '';
 
         req.on('data', (chunk) => {
@@ -44,19 +39,166 @@ http.createServer(function (req, res) {
             const formData = new URLSearchParams(data);
             const username = formData.get('username');
             const password = formData.get('password');
+            const email = formData.get('email');
 
-            // Insert the user into the database (this is a simple example and not secure)
-            const insertQuery = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
+            const insertQuery = `INSERT INTO user (username, password, email) VALUES ('${username}', '${password}', '${email}')`;
 
-            dbConnection.query(insertQuery, (err, result) => {
+            dbConnection.query(insertQuery, (err, _result) => {
                 if (err) {
                     console.error('Error inserting user into the database: ', err);
                     res.writeHead(500, { 'Content-Type': 'text/html' });
                     return res.end('Internal Server Error');
                 }
 
+                // Redirect to a new page after successful signup
+                res.writeHead(302, { 'Location': '/MovieGuru.html' });
+                return res.end();
+            });
+        });
+
+        return;
+    } else if (q.pathname === '/account' && req.method === 'GET') {
+        // Serve the account page
+        file = path.join(baseDirectory, 'account.html');
+    } else if (q.pathname === '/update' && req.method === 'GET') {
+        // Serve the account update page
+        file = path.join(baseDirectory, 'update.html');
+    } else if (q.pathname === '/update' && req.method === 'POST') {
+        // Handle account update form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            const userId = formData.get('userId'); // Add a hidden input for the user ID in update.html
+
+            // Update the user in the database (this is a simple example and not secure)
+            const updateQuery = `UPDATE user SET username = '${username}', password = '${password}' WHERE id = ${userId}`;
+
+            dbConnection.query(updateQuery, (err, result) => {
+                if (err) {
+                    console.error('Error updating user in the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                return res.end('Sign-up successful!'); // You may want to redirect to a login page
+                return res.end('Account updated successfully!');
+            });
+        });
+
+        return;
+    } else if (q.pathname === '/delete' && req.method === 'GET') {
+        // Serve the account deletion confirmation page
+        file = path.join(baseDirectory, 'delete.html');
+    } else if (q.pathname === '/delete' && req.method === 'POST') {
+        // Handle account deletion form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(data);
+            const userId = formData.get('userId'); // Add a hidden input for the user ID in delete.html
+
+            // Delete the user from the database (this is a simple example and not secure)
+            const deleteQuery = `DELETE FROM user WHERE id = ${userId}`;
+
+            dbConnection.query(deleteQuery, (err, result) => {
+                if (err) {
+                    console.error('Error deleting user from the database: ', err);
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end('Internal Server Error');
+                }
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                return res.end('Account deleted successfully!');
+            });
+        });
+
+        return;
+    } else if (q.pathname === '/api/library/add' && req.method === 'POST') {
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const filmData = JSON.parse(data);
+
+            // Adjust the SQL query to exclude the ID column
+            const insertQuery = `INSERT INTO movies_1 (image, Title, Description) VALUES (?, ?, ?)`;
+
+            dbConnection.query(
+                insertQuery,
+                [filmData.image, filmData.title, filmData.description],
+                (err, result) => {
+                    if (err) {
+                        console.error('Error inserting film into the database: ', err);
+                        res.writeHead(500, { 'Content-Type': 'application/json' });
+                        return res.end(JSON.stringify({ success: false, message: 'Internal Server Error' }));
+                    }
+
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ success: true, message: 'Film added to library' }));
+                }
+            );
+        });
+
+        return;
+    } else if (q.pathname === '/api/library/add' && req.method === 'GET') {
+        // Mock data for testing, replace this with actual data retrieval logic
+        const libraryData = [
+            { id: 1, title: 'Film 1', description: 'Description for Film 1', image: 'path/to/image1.jpg' },
+            { id: 2, title: 'Film 2', description: 'Description for Film 2', image: 'path/to/image2.jpg' },
+            { id: 3, title: 'Film 3', description: 'Description for Film 3', image: 'path/to/image3.jpg' }
+        ];
+
+        console.log('Sending library data:', libraryData);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify(libraryData));
+    } else if (q.pathname === '/api/login' && req.method === 'POST') {
+        // Handle user login form submission
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        req.on('end', () => {
+            const loginData = JSON.parse(data);
+            const username = loginData.username;
+            const password = loginData.password;
+
+            const selectQuery = `SELECT username FROM user WHERE LOWER(username) = LOWER(?) AND password = ?`;
+
+            dbConnection.query(selectQuery, [username, password], (err, result) => {
+                if (err) {
+                    console.error('Error during login:', err);
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ success: false, message: 'Internal Server Error' }));
+                }
+
+                const resultDiv = { success: false, message: 'Invalid username or password.' };
+
+                // Check if any rows were returned
+                if (result.length > 0) {
+                    // Login successful
+                    resultDiv.success = true;
+                    resultDiv.message = 'Login successful!';
+                }
+
+                // Send the result back to the client-side
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                return res.end(JSON.stringify(resultDiv));
             });
         });
 
@@ -67,9 +209,8 @@ http.createServer(function (req, res) {
 
     fs.readFile(file, function (err, data) {
         if (err) {
-            // Check if the requested path is a directory and serve a default "index.html" if available
             if (err.code === 'EISDIR') {
-                file = path.join(file, 'index.html');
+                file = path.join(file, 'MovieGuru.html');
                 return fs.readFile(file, function (err, data) {
                     if (err) {
                         res.writeHead(404, { 'Content-Type': 'text/html' });
@@ -85,7 +226,6 @@ http.createServer(function (req, res) {
             return res.end('404 Not Found');
         }
 
-        // Determine the file extension
         let contentType;
         const fileExtension = path.extname(file).slice(1);
 
@@ -99,7 +239,6 @@ http.createServer(function (req, res) {
             case 'js':
                 contentType = 'application/javascript';
                 break;
-            // Add more cases for other file types if needed
 
             default:
                 contentType = 'application/octet-stream';
