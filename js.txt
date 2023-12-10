@@ -22,7 +22,7 @@ dbConnection.connect((err) => {
 http.createServer(function (req, res) {
     const q = url.parse(req.url, true);
     let file;
-    const baseDirectory = 'C:\\Users\\euanm\\Desktop\\WebDev Assignment\\Movies';
+    const baseDirectory = 'C:\\Users\\mpjtr\\WebDev\\MovieGuru';
 
     if (q.pathname === '' || q.pathname === '/') {
         file = path.join(baseDirectory, 'index.html');
@@ -57,15 +57,16 @@ http.createServer(function (req, res) {
         });
 
         return;
-    } else if (q.pathname === '/account' && req.method === 'GET') {
-        // Serve the account page
-        file = path.join(baseDirectory, 'account.html');
-    } else if (q.pathname === '/update' && req.method === 'GET') {
-        // Serve the account update page
-        file = path.join(baseDirectory, 'update.html');
-    } else if (q.pathname === '/update' && req.method === 'POST') {
-        // Handle account update form submission
-        let data = '';
+    
+    } else if (q.pathname === '/delete' && req.method === 'GET') {
+        // Serve the account deletion confirmation page
+        file = path.join(baseDirectory, 'delete.html');
+    // Handle account deletion form submission
+// ... (existing code)
+
+} else if (q.pathname === '/delete' && req.method === 'POST') {
+    // Handle account deletion form submission
+    let data = '';
 
         req.on('data', (chunk) => {
             data += chunk;
@@ -75,55 +76,37 @@ http.createServer(function (req, res) {
             const formData = new URLSearchParams(data);
             const username = formData.get('username');
             const password = formData.get('password');
-            const userId = formData.get('userId'); // Add a hidden input for the user ID in update.html
-
-            // Update the user in the database (this is a simple example and not secure)
-            const updateQuery = `UPDATE user SET username = '${username}', password = '${password}' WHERE id = ${userId}`;
-
-            dbConnection.query(updateQuery, (err, result) => {
-                if (err) {
-                    console.error('Error updating user in the database: ', err);
-                    res.writeHead(500, { 'Content-Type': 'text/html' });
-                    return res.end('Internal Server Error');
-                }
-
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                return res.end('Account updated successfully!');
-            });
-        });
-
-        return;
-    } else if (q.pathname === '/delete' && req.method === 'GET') {
-        // Serve the account deletion confirmation page
-        file = path.join(baseDirectory, 'delete.html');
-    } else if (q.pathname === '/delete' && req.method === 'POST') {
-        // Handle account deletion form submission
-        let data = '';
-
-        req.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        req.on('end', () => {
-            const formData = new URLSearchParams(data);
-            const userId = formData.get('userId'); // Add a hidden input for the user ID in delete.html
 
             // Delete the user from the database (this is a simple example and not secure)
-            const deleteQuery = `DELETE FROM user WHERE id = ${userId}`;
+            const deleteQuery = `DELETE FROM user WHERE username = '${username}' AND password = '${password}'`;
 
             dbConnection.query(deleteQuery, (err, result) => {
                 if (err) {
                     console.error('Error deleting user from the database: ', err);
                     res.writeHead(500, { 'Content-Type': 'text/html' });
-                    return res.end('Internal Server Error');
+                    return res.end(`Internal Server Error: ${err.message}`);
                 }
 
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                return res.end('Account deleted successfully!');
+                if (result.affectedRows > 0) {
+                    // User deleted successfully
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    return res.end('User successfully deleted');
+                } else {
+                    // No matching user found
+                    res.writeHead(404, { 'Content-Type': 'text/plain' });
+                    return res.end('User not found.');
+                }
+                
+                
             });
         });
 
         return;
+
+
+
+
+
     } else if (q.pathname === '/api/library/add' && req.method === 'POST') {
         let data = '';
 
