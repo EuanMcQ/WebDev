@@ -24,9 +24,15 @@ Running The Server:
 
 	To successfully start the server, you must run the command "node node.js" inside the terminal
 	Make sure that you are in the directory that the node.js file has been saved
-	If the server has been started, it will be running at http://localhost:8080/
+	If the server has been started, it will be running at http://localhost:8080/index.html
 
 Using the Webite:
 
-	After starting the server, open http://localhost:8080/ in your web browser.
+	After starting the server, open http://localhost:8080/index.html in your web browser.
 	Explore the different categories of movies, add movies to your library, and check out the dedicated directors' page.
+
+References:
+	
+	Brightspace Module Notes
+	Geeks for Geeks: https://www.geeksforgeeks.org/
+	W3Schools: https://www.w3schools.com/
