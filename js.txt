@@ -62,7 +62,7 @@ http.createServer(function (req, res) {
         // Serve the account deletion confirmation page
         file = path.join(baseDirectory, 'delete.html');
     // Handle account deletion form submission
-// ... (existing code)
+
 
 } else if (q.pathname === '/delete' && req.method === 'POST') {
     // Handle account deletion form submission
