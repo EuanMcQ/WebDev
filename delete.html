@@ -2,25 +2,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for character set, viewport, and description -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="author" content="Your Name">
+    
+    <!-- Title and Bootstrap CSS inclusion -->
     <title>Movie Guru - Delete Account</title>
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Main container for the page content -->
     <div class="container">
         <main>
-            <h2 class="mt-5">Delete Your Account</h2>
-            <p>Are you sure you want to delete your account?</p>
-            <form action="/delete" method="post">
-                <!-- Add a hidden input for the user ID -->
-                <input type="hidden" name="userId" value="[user_id]">
-                <button type="submit" class="btn btn-danger">Delete Account</button>
+            <!-- Title for the delete account section -->
+            <h2 class="mt-5">Delete Your Movie Guru Account</h2>
+
+            <!-- Container to display the result of the delete operation -->
+            <div id="delete-result"></div>
+
+            <!-- Form for user input to delete the account -->
+            <form id="delete-form" action="/delete" method="post">
+                <div class="mb-3">
+                    <!-- Input field for the username -->
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <!-- Input field for the password -->
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <!-- Button to trigger the account deletion -->
+                <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
             </form>
         </main>
     </div>
-    <script src="bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS script inclusion -->
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Define the deleteAccount function in the global scope
+        function deleteAccount() {
+            // Retrieve username and password from input fields
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Fetch request to the server to delete the account
+            fetch('/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `username=${username}&password=${password}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Display the result of the delete operation
+                const resultDiv = document.getElementById('delete-result');
+                resultDiv.innerHTML = `<div class="alert alert-info" role="alert">${data}</div>`;
+                
+                // Adds a "Back to Home" button after successful deletion
+                if (data.includes('successfully')) {
+                    const backButton = document.createElement('button');
+                    backButton.className = 'btn btn-primary';
+                    backButton.innerText = 'Back to Home';
+                    backButton.onclick = function() {
+                        window.location.href = '/index.html';
+                    };
+                    resultDiv.appendChild(backButton);
+                }
+            })
+            .catch(error => {
+                // Display an error message in case of failure
+                console.error('Error during account deletion:', error);
+                const resultDiv = document.getElementById('delete-result');
+                resultDiv.innerHTML = '<div class="alert alert-danger" role="alert">An unexpected error occurred.</div>';
+            });
+        }
+    </script>
 </body>
 </html>
